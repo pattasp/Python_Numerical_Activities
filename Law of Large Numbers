@@ -1,1 +1,61 @@
+#Excercise 1.2 - The law of large numbers | Louis Pierre Stohastic Calculus
 
+#Law of Large Numbers - Strong & Weak with exp(1) samples
+#For weak law we take sampling distr of the sample mean
+#For strong law we go with cumulative mean
+
+#-------Initialiazing the Libraries----
+import numpy as np
+import matplotlib.pyplot as plt
+
+#-------Setting the conditions-----
+
+Seed=0 #Set a seed value for the RNG function to ensure reproducibility
+N_strong= 10000 # Take N_strong samples to sim the Strong Law
+N_weak=[100,10000] #Construct a sample size to test the Weak Law
+n_reps_weak=10000 # Define the repetitions for the weak law
+
+#We create a random number generator RNG
+
+rng = np.random.default_rng(Seed)
+
+#-------a) Strong Law-----
+
+#I want my random var : X to be IID with mu=1 with exp(mu)
+
+#x= rng.exponential(scale=1.0,size=N_strong)
+
+# -- Here I provide more options based on diff. known distribution. You can hoose one : 
+# Just uncomment one:
+
+# 1)Exponential(λ=1) — mean = 1
+x= rng.exponential(scale=1.0,size=N_strong)
+
+# 2) Normal(μ=0, σ=1) — mean = 0
+#x = rng.normal(loc=0.0, scale=1.0, size=N_strong)
+
+# 3) Uniform(0,1) — mean = 0.5
+#x = rng.uniform(0.0, 1.0, size=N_strong)
+
+# 4) Bernoulli(p=0.3) — mean = 0.3
+#x = rng.binomial(n=1, p=0.3, size=N_strong)
+
+# 5) Poisson(λ=4) — mean = 4
+#x = rng.poisson(lam=4.0, size=N_strong)
+
+
+
+cum_mean = np.cumsum(x)/np.arange(1,N_strong+1)
+
+theoretical_mean = np.mean(x)
+
+#Plotting the SLLN
+
+plt.figure(figsize=(10,6))
+plt.plot(np.arange(1,N_strong+1),cum_mean,linewidth=1.0)
+plt.axhline(np.mean(x), color='red', linestyle='--', label='empirical mean')# Optional just to make visible the axis line of x==N to trace better the Law
+plt.xlabel("N")
+plt.ylabel("Empirical mean -> N")
+plt.title("Strong Law : With Cumulative Mean of exp(mu=1)")
+plt.tight_layout()
+plt.show()
