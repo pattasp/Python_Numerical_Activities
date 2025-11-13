@@ -16,7 +16,7 @@ def accept_reject_gen(f,g,sample_g,a):
     """
     
     while True:
-        Y = sample_g #generate Y
+        Y = sample_g() #generate Y
         U = random.random() #generate Uniform(0,1) U
         
         if U < f(Y)/(a*g(Y)):
@@ -30,6 +30,7 @@ Notes:
     or accept ratio. So a = supremum(f(x)/g(x)) with respect to x. Also to
     achieve this a we need the ratio to be propotionally ->1 so we need to also 
     choose a g(.) similar to f(.)
+
 
 
 """
